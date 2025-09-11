@@ -3,6 +3,10 @@
 require_once __DIR__ . '/db.php';
 $config = require __DIR__ . '/config.php';
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL); 
+
 function json_response($data, $code = 200) {
     header('Content-Type: application/json; charset=utf-8');
     http_response_code($code);
