@@ -1,0 +1,688 @@
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Врач-Хирург Фатенко С.Н.</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --secondary: #0f172a;
+      --accent: #3b82f6;
+      --light: #f8fafc;
+      --dark: #0f172a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+    }
+
+    /* Анимации */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    /* Навигация */
+    .navbar {
+      background: rgba(15, 23, 42, 0.95) !important;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      background: rgba(15, 23, 42, 0.98) !important;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.8) !important;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: #fff !important;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Герой секция */
+    .hero {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(37, 99, 235, 0.8) 100%), 
+                  url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 2rem;
+    }
+
+    .info-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    /* Секции */
+    section {
+      padding: 5rem 0;
+    }
+
+    .section-title {
+      position: relative;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    /* Карточки компетенций */
+    .skill-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      height: 100%;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .skill-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      border-color: var(--accent);
+    }
+
+    .skill-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    /* Контакты */
+    .contact-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .contact-item {
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-item:last-child {
+      border-bottom: none;
+    }
+
+    .contact-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      margin-right: 1rem;
+      font-size: 1.2rem;
+    }
+
+    /* Форма отзывов */
+    .review-form {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control, .form-select {
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+    }
+
+    /* Футер */
+    footer {
+      background: var(--secondary);
+      color: white;
+      padding: 3rem 0;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      .hero {
+        height: auto;
+        min-height: 100vh;
+        padding: 4rem 0;
+      }
+      
+      .info-card {
+        padding: 1.5rem;
+        margin: 1rem;
+      }
+      
+      section {
+        padding: 3rem 0;
+      }
+    }
+
+    /* Анимации появления */
+    .fade-in-element {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .fade-in-element.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔷 Навигация -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">
+        <i class="fas fa-heartbeat me-2"></i>Фатенко С.Н.
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#hero">Главная</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">Обо мне</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Компетенции</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Контакты</a></li>
+          <li class="nav-item"><a class="nav-link" href="#reviews">Отзывы</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 🔷 Главная -->
+  <header class="hero" id="hero">
+    <div class="hero-content">
+      <div class="info-card animate-fade-in-up">
+        <h1 class="display-4 fw-bold text-dark mb-3">Доктор Фатенко Сергей Николаевич</h1>
+        <h3 class="text-primary mb-3">
+          <i class="fas fa-user-md me-2"></i>Врач-хирург высшей категории
+        </h3>
+        <p class="text-muted fs-5 mb-3">
+          <i class="fas fa-award me-2"></i>5 лет успешной хирургической практики
+        </p>
+        <p class="text-muted fs-6 mb-4">
+          <i class="fas fa-procedures me-2"></i>Абдоминальная, лапароскопическая и ургентная хирургия
+        </p>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+          <a href="#contact" class="btn btn-primary btn-lg px-4 py-2">
+            <i class="fas fa-phone me-2"></i>Записаться на прием
+          </a>
+          <a href="#skills" class="btn btn-outline-primary btn-lg px-4 py-2">
+            <i class="fas fa-stethoscope me-2"></i>Услуги
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 🔷 Обо мне -->
+  <section id="about" class="bg-light">
+    <div class="container">
+      <h2 class="section-title display-5 fw-bold">Обо мне</h2>
+      <div class="row justify-content-center">
+        <div class="col-lg-8 fade-in-element">
+          <div class="bg-white p-4 rounded-3 shadow-sm">
+            <p class="lead mb-4">
+              Я — практикующий хирург с более чем 5-летним опытом. Сотни успешных операций, 
+              постоянное повышение квалификации, участие в международных конференциях и 
+              искренняя забота о каждом пациенте — основа моей профессиональной деятельности.
+            </p>
+            <div class="row text-center g-4 mt-4">
+              <div class="col-md-4">
+                <div class="p-3">
+                  <i class="fas fa-user-md fa-2x text-primary mb-3"></i>
+                  <h4 class="fw-bold text-primary">500+</h4>
+                  <p class="text-muted">Операций</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="p-3">
+                  <i class="fas fa-graduation-cap fa-2x text-primary mb-3"></i>
+                  <h4 class="fw-bold text-primary">15+</h4>
+                  <p class="text-muted">Сертификатов</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="p-3">
+                  <i class="fas fa-heart fa-2x text-primary mb-3"></i>
+                  <h4 class="fw-bold text-primary">98%</h4>
+                  <p class="text-muted">Довольных пациентов</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔷 Компетенции -->
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title display-5 fw-bold">Компетенции</h2>
+      <div class="row g-4">
+        <div class="col-md-4 fade-in-element">
+          <div class="skill-card">
+            <div class="skill-icon">
+              <i class="fas fa-microscope"></i>
+            </div>
+            <h4 class="text-center fw-bold mb-3">Лапароскопическая хирургия</h4>
+            <p class="text-muted text-center">
+              Минимально инвазивные операции с коротким сроком восстановления и минимальными рубцами.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4 fade-in-element">
+          <div class="skill-card">
+            <div class="skill-icon">
+              <i class="fas fa-procedures"></i>
+            </div>
+            <h4 class="text-center fw-bold mb-3">Общая хирургия</h4>
+            <p class="text-muted text-center">
+              Операции на ЖКТ, грыжи, аппендицит, острые хирургические состояния.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4 fade-in-element">
+          <div class="skill-card">
+            <div class="skill-icon">
+              <i class="fas fa-heartbeat"></i>
+            </div>
+            <h4 class="text-center fw-bold mb-3">Постоперационный контроль</h4>
+            <p class="text-muted text-center">
+              Комплексное ведение пациента на всех этапах лечения и восстановления.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔷 Контакты -->
+  <section id="contact" class="bg-light">
+    <div class="container">
+      <h2 class="section-title display-5 fw-bold">Контакты</h2>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="contact-card fade-in-element">
+            <div class="contact-item d-flex align-items-center">
+              <div class="contact-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div>
+                <h5 class="mb-1">Телефон</h5>
+                <p class="mb-0 text-muted">+7 (999) 123-45-67</p>
+              </div>
+            </div>
+            <div class="contact-item d-flex align-items-center">
+              <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div>
+                <h5 class="mb-1">Email</h5>
+                <p class="mb-0 text-muted">dr.fatenko@example.com</p>
+              </div>
+            </div>
+            <div class="contact-item d-flex align-items-center">
+              <div class="contact-icon">
+                <i class="fas fa-hospital"></i>
+              </div>
+              <div>
+                <h5 class="mb-1">Клиника</h5>
+                <p class="mb-0 text-muted">Городская больница №1, Тула</p>
+              </div>
+            </div>
+            <div class="contact-item d-flex align-items-center">
+              <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div>
+                <h5 class="mb-1">Адрес</h5>
+                <p class="mb-0 text-muted">ул. Здоровья, 10</p>
+              </div>
+            </div>
+            <div class="text-center mt-4">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2479.8477777777777!2d37.6173!3d54.1961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTTCsDExJzQ2LjAiTiAzN8KwMzcnMDIuMyJF!5e0!3m2!1sen!2sru!4v1234567890" 
+                width="100%" 
+                height="250" 
+                style="border:0; border-radius: 10px;" 
+                allowfullscreen="" 
+                loading="lazy">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔷 Отзывы -->
+  <section id="reviews">
+    <div class="container">
+      <h2 class="section-title display-5 fw-bold">Отзывы пациентов</h2>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="review-form fade-in-element">
+            <form id="review-form">
+              <div class="mb-4">
+                <label for="name" class="form-label fw-bold">Ваше имя</label>
+                <input type="text" class="form-control" id="name" placeholder="Введите ваше имя" required>
+              </div>
+              <div class="mb-4">
+                <label for="rating" class="form-label fw-bold">Оценка</label>
+                <select class="form-select" id="rating" required>
+                  <option value="" disabled selected>Выберите оценку</option>
+                  <option value="5">⭐⭐⭐⭐⭐ 5 — Отлично</option>
+                  <option value="4">⭐⭐⭐⭐ 4 — Хорошо</option>
+                  <option value="3">⭐⭐⭐ 3 — Нормально</option>
+                  <option value="2">⭐⭐ 2 — Плохо</option>
+                  <option value="1">⭐ 1 — Ужасно</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label for="message" class="form-label fw-bold">Ваш отзыв</label>
+                <textarea class="form-control" id="message" rows="5" placeholder="Напишите здесь ваш опыт..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary w-100 py-3">
+                <i class="fas fa-paper-plane me-2"></i>Отправить отзыв
+              </button>
+            </form>
+            <div id="review-result" class="alert alert-success mt-4 d-none">
+              <i class="fas fa-check-circle me-2"></i>Спасибо за ваш отзыв! Он будет опубликован после модерации.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔷 Футер -->
+  <footer>
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-12">
+          <h3 class="mb-4">
+            <i class="fas fa-heartbeat me-2"></i>Доктор Фатенко С.Н.
+          </h3>
+          <p class="mb-4">Профессиональная медицинская помощь с заботой о каждом пациенте</p>
+          <div class="social-links mb-4">
+            <a href="#" class="btn btn-outline-light btn-sm me-2">
+              <i class="fab fa-telegram"></i>
+            </a>
+            <a href="#" class="btn btn-outline-light btn-sm me-2">
+              <i class="fab fa-vk"></i>
+            </a>
+            <a href="#" class="btn btn-outline-light btn-sm">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+          </div>
+          <hr class="my-4 opacity-25">
+          <p class="mb-0">&copy; 2024 Доктор Фатенко С.Н. Все права защищены.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Плавная прокрутка для навигационных ссылок
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Изменение стиля навигации при скролле
+    window.addEventListener('scroll', function() {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 100) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Анимация появления элементов при скролле
+    const fadeElements = document.querySelectorAll('.fade-in-element');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    fadeElements.forEach(element => {
+      observer.observe(element);
+    });
+
+    // Обработка формы отзывов
+    document.getElementById('review-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const result = document.getElementById('review-result');
+      result.classList.remove('d-none');
+      result.classList.add('animate-fade-in');
+      this.reset();
+      
+      // Автоматическое скрытие сообщения через 5 секунд
+      setTimeout(() => {
+        result.classList.add('d-none');
+      }, 5000);
+    });
+
+    // Анимация героя при загрузке
+    window.addEventListener('load', function() {
+      const heroContent = document.querySelector('.hero-content');
+      heroContent.style.animation = 'fadeInUp 1s ease-out';
+    });
+  </script>
+
+<!-- Блок для вывода результата -->
+<div id="review-result" class="d-none"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('review-form');
+  const result = document.getElementById('review-result');
+
+  if (!form) return; // если форма не найдена, выходим
+
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const rating = document.getElementById('rating').value;
+    const message = document.getElementById('message').value.trim();
+
+    const payload = { name, rating, message };
+
+    try {
+      const res = await fetch('/backend/api/submit_review.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Ошибка отправки');
+
+      // Сообщение об успехе
+      result.textContent = 'Спасибо! Ваш отзыв принят на модерацию.';
+      result.classList.remove('d-none');
+      result.style.color = 'green';
+      form.reset();
+
+      setTimeout(() => {
+        result.classList.add('d-none');
+      }, 5000);
+
+    } catch (err) {
+      result.textContent = 'Ошибка: ' + err.message;
+      result.classList.remove('d-none');
+      result.style.color = 'red';
+    }
+  });
+});
+</script>
+</body>
+</html>
+```
