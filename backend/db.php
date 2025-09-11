@@ -5,7 +5,7 @@ $config = require __DIR__ . '/config.php';
 function getPDO() {
     static $pdo = null;
     if ($pdo === null) {
-        $cfg = require DIR . '/config.php';
+        $cfg = require __DIR__ . '/config.php';
         $path = $cfg['db_path'];
         if (!is_dir(dirname($path))) {
             mkdir(dirname($path), 0755, true);
