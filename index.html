@@ -513,6 +513,7 @@
               <div class="mb-4">
                 <label for="name" class="form-label fw-bold">Ваше имя</label>
                 <input type="text" class="form-control" id="name" placeholder="Введите ваше имя" required>
+                <input type="hidden" name="tcrf" id="tcrf" value="">
               </div>
               <div class="mb-4">
                 <label for="rating" class="form-label fw-bold">Оценка</label>
@@ -679,6 +680,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+  documen.addEventListener("DOMContentLoaded", ()=>{
+    fetch('./backend/api/get_token.php')
+    .then(r=> r.json())
+    .then(data=> {
+      documen.getElementById("tcrf").value = data.token;
+    })
+  });
 </script>
 </body>
 </html>
