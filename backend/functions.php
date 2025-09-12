@@ -2,7 +2,13 @@
 // backend/functions.php
 require_once __DIR__ . '/db.php';
 $config = require __DIR__ . '/config.php';
-
+sessiona_start();
+function getCsrfToken(){
+    if (empty($_SESSION['csrf_token'])){
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL); 
