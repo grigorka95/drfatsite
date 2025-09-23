@@ -641,8 +641,20 @@
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('review-form');
   const result = document.getElementById('review-result');
+  const tokenInput = document.getElementById('tcrf');
 
   if (!form) return; // если форма не найдена, выходим
+  // Получаем CSRF токен и вставляем в скрытое поле
+  fetch('backend/api/get_token.php')
+      .then(r => r.json())
+      .then(data => {
+        if (data && data.token){
+          tokenInput.value = data.token;
+        }
+      })
+      .catch(() => {
+            console.warn('Не удалось получить CSRF токен');
+      });
 
   form.addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -650,8 +662,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const name = document.getElementById('name').value.trim();
     const rating = document.getElementById('rating').value;
     const message = document.getElementById('message').value.trim();
+    const tcrf = tokenInput.value;
 
-    const payload = { name, rating, message };
+    const payload = { name, rating, message, tcrf };
 
     try {
       const res = await fetch('/backend/api/submit_review.php', {
