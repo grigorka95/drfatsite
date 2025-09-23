@@ -693,13 +693,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
-  documen.addEventListener("DOMContentLoaded", ()=>{
-    fetch('./backend/api/get_token.php')
-    .then(r=> r.json())
-    .then(data=> {
-      documen.getElementById("tcrf").value = data.token;
-    })
-  });
 </script>
 </body>
 </html>
