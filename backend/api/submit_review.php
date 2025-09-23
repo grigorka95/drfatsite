@@ -42,12 +42,12 @@ if ($name === '' || $message === '' || $rating < 1 || $rating > 5) {
 $ip = ip_address();
 $hash = make_hash($name, $rating, $message);
 
-// check duplicate
+// проверка дублей отзывов
 if (is_duplicate($hash)) {
     json_response(['error' => 'Похожий отзыв уже существует'], 409);
 }
 
-// rate limit by IP
+// Лимит отправок с 1 ip адреса
 $todayCount = ip_count_today($ip);
 if ($todayCount >= $config['max_reviews_per_ip_per_day']) {
     json_response(['error' => 'Превышен лимит отправок с вашего IP за сегодня'], 429);
@@ -64,7 +64,7 @@ $stmt->execute([
     ':hash' => $hash,
 ]);
 
-// notify admin (async-ish — mail() is synchronous but fine here)
+// Уведомление админа
 notify_admin($name, $rating, $message, $config['admin_email']);
 
 json_response(['success' => true, 'message' => 'Отзыв принят на модерацию']);
