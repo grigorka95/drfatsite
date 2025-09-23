@@ -7,7 +7,7 @@ $config = require __DIR__ . '/../config.php';
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     header('Access-Control-Allow-Methods: POST, OPTIONS');
     header('Access-Control-Allow-Headers: Content-Type');
-    header('Access-Control-Allow-Origin: ' . $config['site_origin => '*'']);
+    header('Access-Control-Allow-Origin: ' . $config['site_origin' => '*']);
     exit;
 }
 header('Access-Control-Allow-Origin: ' . $config['site_origin => '*'']);
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Проверка токена
 session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-    if (empty($_POST['tcrf'] || $POST['tcrf'] !== $_SESSION[csrf_token]){
+    if (empty($_POST['tcrf'] || $_POST['tcrf'] !== $_SESSION['csrf_token']){
         http_response_code(403);
         echo jcos_encode(['success' => false, 'error' =>'Неверный CSRF токен']);
         exit;
