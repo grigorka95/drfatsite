@@ -34,6 +34,8 @@ if (!$input) {
 $name = clean_text($input['name'] ?? '');
 $rating = intval($input['rating'] ?? 0);
 $message = clean_text($input['message'] ?? '');
+if (mb_strlen($name, 'UTF-8') > 200) json_response(['error'=>'Имя слишком длинное'], 400);
+if (mb_strlen($message, 'UTF-8') > 3000) json_response(['error'=>'Слишком длинное сообщение'], 400);
 
 if ($name === '' || $message === '' || $rating < 1 || $rating > 5) {
     json_response(['error' => 'Неверные данные'], 400);
