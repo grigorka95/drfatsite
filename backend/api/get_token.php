@@ -1,4 +1,4 @@
 <?php
-require __DIR__ . '/../function.php';
+require __DIR__ . '/../functions.php';
 header('Content-Type: application/json');
 echo json_encode(['token' => getCsrfToken()]);
