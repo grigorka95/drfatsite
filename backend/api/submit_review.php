@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     header('Access-Control-Allow-Origin: ' . $config['site_origin' => '*']);
     exit;
 }
-header('Access-Control-Allow-Origin: ' . $config['site_origin => '*'']);
+header('Access-Control-Allow-Origin: ' . $config['site_origin' => '*']);
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     json_response(['error' => 'Method not allowed'], 405);
@@ -20,7 +20,7 @@ session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     if (empty($_POST['tcrf'] || $_POST['tcrf'] !== $_SESSION['csrf_token']){
         http_response_code(403);
-        echo jcos_encode(['success' => false, 'error' =>'Неверный CSRF токен']);
+        echo json_encode(['success' => false, 'error' =>'Неверный CSRF токен']);
         exit;
     }
 }
