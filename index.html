@@ -456,7 +456,7 @@
               </div>
               <div>
                 <h5 class="mb-1">Телефон</h5>
-                <p class="mb-0 text-muted">+7 (999) 123-45-67</p>
+                <p class="mb-0 text-muted">+7 (953) 957-01-57</p>
               </div>
             </div>
             <div class="contact-item d-flex align-items-center">
@@ -474,7 +474,7 @@
               </div>
               <div>
                 <h5 class="mb-1">Клиника</h5>
-                <p class="mb-0 text-muted">Городская больница №1, Тула</p>
+                <p class="mb-0 text-muted">Клиника Варикоза нет</p>
               </div>
             </div>
             <div class="contact-item d-flex align-items-center">
@@ -483,7 +483,7 @@
               </div>
               <div>
                 <h5 class="mb-1">Адрес</h5>
-                <p class="mb-0 text-muted">ул. Здоровья, 10</p>
+                <p class="mb-0 text-muted">Тула ул. Тульского Рабочего Полка 96/3</p>
               </div>
             </div>
             <div class="text-center mt-4">
@@ -615,21 +615,6 @@
     fadeElements.forEach(element => {
       observer.observe(element);
     });
-
-    // Обработка формы отзывов
-    document.getElementById('review-form').addEventListener('submit', function(event) {
-      event.preventDefault();
-      const result = document.getElementById('review-result');
-      result.classList.remove('d-none');
-      result.classList.add('animate-fade-in');
-      this.reset();
-      
-      // Автоматическое скрытие сообщения через 5 секунд
-      setTimeout(() => {
-        result.classList.add('d-none');
-      }, 5000);
-    });
-
     // Анимация героя при загрузке
     window.addEventListener('load', function() {
       const heroContent = document.querySelector('.hero-content');
