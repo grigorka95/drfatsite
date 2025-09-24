@@ -15,22 +15,22 @@ header('Access-Control-Allow-Origin: ' . ($config['site_origin'] ?? '*'));
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     json_response(['error' => 'Method not allowed'], 405);
 }
-// Проверка токена
-session_start();
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-    if (empty($_POST['tcrf'] || $_POST['tcrf'] !== $_SESSION['csrf_token']){
-        http_response_code(403);
-        echo json_encode(['success' => false, 'error' =>'Неверный CSRF токен']);
-        exit;
-    }
-}
-
-$input = json_decode(file_get_contents('php://input'), true);
-if (!$input) {
-    // fallback to form-encoded
+// Проверка токена получаем тело (может быть JSON)
+$raw = file_get_contents('php://input');
+$input = json_decode($raw, true);
+if (!is_array($input)) {
     $input = $_POST;
 }
-
+// Инициируем сессию (чтобы были доступны $_SESSION['csrf_token'])
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+// CSRF: токен может прийти в поле tcrf или в заголовке X-CSRF-Token
+$token = $input['tcrf'] ?? ($_SERVER['HTTP_X_CSRF_TOKEN'] ?? null);
+if (empty($token)!hash_equals($_SESSION['csrf_token'], $token)) {
+    json_response(['success' => false, 'error' => 'Неверный CSRF токен'], 403);
+}
+    
 $name = clean_text($input['name'] ?? '');
 $rating = intval($input['rating'] ?? 0);
 $message = clean_text($input['message'] ?? '');
@@ -51,7 +51,7 @@ if (is_duplicate($hash)) {
 
 // Лимит отправок с 1 ip адреса
 $todayCount = ip_count_today($ip);
-if ($todayCount >= $config['max_reviews_per_ip_per_day']) {
+if ($todayCount >= ($config['max_reviews_per_ip_per_day'] ?? 5)) {
     json_response(['error' => 'Превышен лимит отправок с вашего IP за сегодня'], 429);
 }
 
