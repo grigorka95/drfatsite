@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Админ — модерация отзывов</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container py-4">
+  <h1 class="mb-4">Модерация отзывов</h1>
+  <div id="reviews"></div>
+
+  <script>
+    const SECRET = "verysecretkey"; // тот же ключ, что в PHP
+
+    async function loadPending() {
+      const res = await fetch(`/backend/api/list_reviews.php?status=pending&secret=${SECRET}`);
+      const data = await res.json();
+      const box = document.getElementById('reviews');
+      box.innerHTML = '';
+
+      (data.data || []).forEach(r => {
+        const card = document.createElement('div');
+        card.className = 'card mb-3';
+        card.innerHTML = `
+          <div class="card-body">
+            <h5 class="card-title">${r.name} — ${r.rating}★</h5>
+            <p class="card-text">${r.message}</p>
+            <button class="btn btn-success btn-sm" onclick="approve(${r.id})">Одобрить</button>
+          </div>`;
+        box.appendChild(card);
+      });
+    }
+
+    async function approve(id) {
+      const formData = new FormData();
+      formData.append('id', id);
+      formData.append('secret', SECRET);
+
+      await fetch('/backend/api/approve_review.php', { method: 'POST', body: formData });
+      loadPending(); // обновляем список
+    }
+
+    loadPending();
+  </script>
+</body>
+</html>
