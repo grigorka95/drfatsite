@@ -67,6 +67,6 @@ $stmt->execute([
 ]);
 
 // Уведомление админа
-notify_admin($name, $rating, $message, $config['admin_email']);
+notify_admin($name, $rating, $message, $config['admin_email'] ?? '7trane777@mail.ru');
 
 json_response(['success' => true, 'message' => 'Отзыв принят на модерацию']);
