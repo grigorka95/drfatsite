@@ -631,7 +631,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (!form) return; // если форма не найдена, выходим
   // Получаем CSRF токен и вставляем в скрытое поле
-  fetch('backend/api/get_token.php')
+  fetch('/backend/api/get_token.php')
       .then(r => r.json())
       .then(data => {
         if (data && data.token){
