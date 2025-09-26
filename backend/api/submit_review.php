@@ -27,7 +27,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 // CSRF: токен может прийти в поле tcrf или в заголовке X-CSRF-Token
 $token = $input['tcrf'] ?? ($_SERVER['HTTP_X_CSRF_TOKEN'] ?? null);
-if (empty($token)!hash_equals($_SESSION['csrf_token'], $token)) {
+if (empty($token) || !hash_equals($_SESSION['csrf_token'], $token)) {
     json_response(['success' => false, 'error' => 'Неверный CSRF токен'], 403);
 }
     
