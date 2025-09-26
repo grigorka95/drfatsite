@@ -10,5 +10,11 @@ $stmt = $pdo->prepare("SELECT name, rating, message, created_at
                        LIMIT 50");
 $stmt->execute();
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//Экранируем от XSS вывод
+foreach ($rows as &$r) {
+    $r['name'] = htmlspecialchars($r['name']);
+    $r['message'] = htmlspecialchars($r['message']);
+}
+unset($r);
 
 json_response(['data' => $rows]);
