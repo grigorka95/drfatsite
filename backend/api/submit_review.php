@@ -21,10 +21,6 @@ $input = json_decode($raw, true);
 if (!is_array($input)) {
     $input = $_POST;
 }
-// Инициируем сессию (чтобы были доступны $_SESSION['csrf_token'])
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 // CSRF: токен может прийти в поле tcrf или в заголовке X-CSRF-Token
 $token = $input['tcrf'] ?? ($_SERVER['HTTP_X_CSRF_TOKEN'] ?? null);
 if (empty($token) || !hash_equals($_SESSION['csrf_token'], $token)) {
