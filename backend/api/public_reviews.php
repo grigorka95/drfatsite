@@ -12,8 +12,8 @@ $stmt->execute();
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //Экранируем от XSS вывод
 foreach ($rows as &$r) {
-    $r['name'] = htmlspecialchars($r['name'], ENT_QUOTES | ENT_SUBTITUTE, 'UTF-8');
-    $r['message'] = htmlspecialchars($r['message'], ENT_QUOTES | ENT_SUBTITUTE, 'UTF-8');
+    $r['name'] = htmlspecialchars($r['name'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $r['message'] = htmlspecialchars($r['message'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 unset($r);
 
