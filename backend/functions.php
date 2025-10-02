@@ -2,6 +2,11 @@
 // backend/functions.php
 require_once __DIR__ . '/db.php';
 $config = require __DIR__ . '/config.php';
+
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(E_ALL); 
+
 session_start();
 function getCsrfToken(){
     if (empty($_SESSION['csrf_token'])){
@@ -9,9 +14,6 @@ function getCsrfToken(){
     }
     return $_SESSION['csrf_token'];
 }
-ini_set('display_errors', 0);
-ini_set('display_startup_errors', 0);
-error_reporting(E_ALL); 
 
 function json_response($data, $code = 200) {
     header('Content-Type: application/json; charset=utf-8');
@@ -46,7 +48,7 @@ function is_duplicate($hash) {
 
 function ip_count_today($ip) {
     $pdo = getPDO();
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM reviews WHERE ip = :ip AND datetime(created_at) >= date('now','start of day')");
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM reviews WHERE ip = :ip AND DATE(created_at) >= CURDATE()");
     $stmt->execute([':ip' => $ip]);
     return (int)$stmt->fetchColumn();
 }
