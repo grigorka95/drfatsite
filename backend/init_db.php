@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS reviews (
     rating INT NOT NULL CHECK(rating BETWEEN 1 AND 5),
     message TEXT NOT NULL,
     ip VARCHAR(45),
-    status ENUM('pending', 'approved', 'deleted') NOT NULL DEFAULT 'pendeing',
+    status ENUM('pending', 'approved', 'deleted') NOT NULL DEFAULT 'pending',
     hash CHAR(64) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
