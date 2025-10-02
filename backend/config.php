@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/env_loader.php';
+require_once __DIR__ . '/env_loader.php';
 loadEnv(__DIR__ . '/.env');
 return [
     'db_host' => $_ENV['DB_HOST'] ?? 'localhost',
