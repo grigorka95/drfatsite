@@ -1,5 +1,9 @@
 <?php
 // backend/init_db.php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require __DIR__ . '/db.php';
 
 $pdo = getPDO();
@@ -17,7 +21,13 @@ CREATE TABLE IF NOT EXISTS reviews (
 );
 ");
 
-$pdo->exec("CREATE INDEX idx_reviews_status ON reviews(status);");
-$pdo->exec("CREATE INDEX idx_reviews_hash ON reviews(hash);");
+try{$pdo->exec("CREATE INDEX idx_reviews_status ON reviews(status);");
+   } catch (Exception $e){
+    // индекс может уже существовать
+}
+try{$pdo->exec("CREATE INDEX idx_reviews_hash ON reviews(hash);");
+   } catch (Exception $e){
+    // игнорируем
+}
 
 echo "DB initialized\n";
