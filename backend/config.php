@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/env_loader.php';
-loadEnv(__DIR__ . '/../.env');
+loadEnv(__DIR__ . '/.env');
 return [
     'db_host' => $_ENV['DB_HOST'] ?? 'localhost',
     'db_name' => $_ENV['DB_NAME'] ?? '',
