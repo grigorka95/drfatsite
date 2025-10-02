@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS reviews (
     status ENUM('pending', 'approved', 'deleted') NOT NULL DEFAULT 'pending',
     hash CHAR(64) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ");
 
 try{$pdo->exec("CREATE INDEX idx_reviews_status ON reviews(status);");
