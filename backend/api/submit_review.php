@@ -1,7 +1,12 @@
 <?php
 // backend/api/submit_review.php
+
 require __DIR__ . '/../functions.php';
 $config = require __DIR__ . '/../config.php';
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 // CORS (если нужно)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -21,9 +26,11 @@ $input = json_decode($raw, true);
 if (!is_array($input)) {
     $input = $_POST;
 }
+file_put_contents(__DIR__ . '/../debug.log', "RAW: $raw\nINPUT: " . print_r($input, true) . "\n", FILE_APPEND);
 // CSRF: токен может прийти в поле tcrf или в заголовке X-CSRF-Token
 $token = $input['tcrf'] ?? ($_SERVER['HTTP_X_CSRF_TOKEN'] ?? null);
-if (empty($token) || !hash_equals($_SESSION['csrf_token'], $token)) {
+$sessionToken = $_SESSION['csrf_token'] ?? '';
+if (empty($token) || empty($sessionToken) || !hash_equals($sessionToken, $token)) {
     json_response(['success' => false, 'error' => 'Неверный CSRF токен'], 403);
 }
     

@@ -8,16 +8,17 @@
 <body class="container py-4">
   <h1 class="mb-4">Модерация отзывов</h1>
   <div id="reviews"></div>
-
   <script>
-    const SECRET = "verysecretkey"; // тот же ключ, что в PHP
-
     async function loadPending() {
-      const res = await fetch(`/backend/api/list_reviews.php?status=pending&secret=${SECRET}`);
+      const res = await fetch('/backend/api/list_reviews.php?status=pending');
+      if (!res.ok) {
+        document.getElementById('reviews').innerHTML =
+          '<div class="alert alert-danger">Ошибка авторизации или доступа</div>';
+        return;
+      }
       const data = await res.json();
       const box = document.getElementById('reviews');
       box.innerHTML = '';
-
       (data.data || []).forEach(r => {
         const card = document.createElement('div');
         card.className = 'card mb-3';
@@ -30,16 +31,19 @@
         box.appendChild(card);
       });
     }
-
     async function approve(id) {
       const formData = new FormData();
       formData.append('id', id);
-      formData.append('secret', SECRET);
-
-      await fetch('/backend/api/approve_review.php', { method: 'POST', body: formData });
-      loadPending(); // обновляем список
+      const res = await fetch('/backend/api/approve_review.php', {
+        method: 'POST',
+        body: formData
+      });
+      if (res.ok) {
+        loadPending();
+      } else {
+        alert('Ошибка при одобрении');
+      }
     }
-
     loadPending();
   </script>
 </body>
