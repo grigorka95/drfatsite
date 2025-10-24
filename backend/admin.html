@@ -10,7 +10,7 @@
   <div id="reviews"></div>
   <script>
     async function loadPending() {
-      const res = await fetch('/backend/api/list_reviews.php?status=pending');
+      const res = await fetch('/backend/api/list_reviews.php?status=pending', { credentials: 'include'});
       if (!res.ok) {
         document.getElementById('reviews').innerHTML =
           '<div class="alert alert-danger">Ошибка авторизации или доступа</div>';
