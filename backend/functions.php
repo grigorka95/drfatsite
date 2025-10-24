@@ -15,7 +15,11 @@ function getCsrfToken() : string {
     }
     return $_SESSION['csrf_token'];
 }
-
+function validateCsrfToken(?string $token) : bool {
+    if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+    if (empty($_SESSION['csrf_token'])) return false;
+    return hash_equals($_SESSION['csrf_token'], (string)$token);
+}
 function json_response($data, $code = 200) {
     header('Content-Type: application/json; charset=utf-8');
     http_response_code($code);
