@@ -1,6 +1,6 @@
 <?php
 // backend/api/submit_review.php
-
+require __DIR__ . '/../session_init.php';
 require __DIR__ . '/../functions.php';
 $config = require __DIR__ . '/../config.php';
 
@@ -54,7 +54,7 @@ if (is_duplicate($hash)) {
 
 // Лимит отправок с 1 ip адреса
 $todayCount = ip_count_today($ip);
-if ($todayCount >= ($config['max_reviews_per_ip_per_day'] ?? 5)) {
+if ($todayCount >= ($config['max_reviews_per_ip_per_day'] ?? 2)) {
     json_response(['error' => 'Превышен лимит отправок с вашего IP за сегодня'], 429);
 }
 
