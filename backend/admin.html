@@ -36,6 +36,7 @@
       formData.append('id', id);
       const res = await fetch('/backend/api/approve_review.php', {
         method: 'POST',
+        credentials: 'include',
         body: formData
       });
       if (res.ok) {
