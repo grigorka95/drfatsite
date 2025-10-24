@@ -6,10 +6,11 @@ $config = require __DIR__ . '/config.php';
 $ADMIN_USER = $config['admin_user'];
 $ADMIN_PASS = $config['admin_pass'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $user = $_POST['username'] ?? '';
-    $pass = $_POST['password'] ?? '';
+    $user = trim($_POST['username'] ?? '');
+    $pass = trim($_POST['password'] ?? '');
     // Проверка логина и пароля
     if ($user === $ADMIN_USER && $pass === $ADMIN_PASS) {
+        session_regenerate_id(true);
         $_SESSION['is_admin'] = true;
         header("Location: /backend/admin.html");
         exit;
