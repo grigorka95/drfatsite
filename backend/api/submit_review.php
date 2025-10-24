@@ -4,13 +4,10 @@ require __DIR__ . '/../session_init.php';
 require __DIR__ . '/../functions.php';
 $config = require __DIR__ . '/../config.php';
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 // CORS (если нужно)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     header('Access-Control-Allow-Methods: POST, OPTIONS');
+    header('Access-Control-Allow-Credentials: true');
     header('Access-Control-Allow-Headers: Content-Type');
     header('Access-Control-Allow-Origin: ' . ($config['site_origin'] ?? '*'));
     exit;
